@@ -150,38 +150,30 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   color: Colors.grey.shade100,
                   child: ListView(children: [
-                  Text("Actividades",
-                  style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 5,),
-                  Row(
-                    children: [
-                      Container(
-                        height: 90,
-                        width: 90,
-                        decoration: BoxDecoration(
-                          color: Colors.blue.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(10.0)
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.card_membership,color: Color(0XFF01579B),),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text('Meu cartão',style:
-                            TextStyle(fontWeight: FontWeight.bold,
-                            color: Colors.black54
-                            )
-                            ,)
-                          ],
-                        ),
-                      )
-                    ],
-                  )
-                  
-                ]),),
+                    Text(
+                      "Actividades",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        buildActivityButton(Icons.card_membership, "Meu cartão",
+                            Colors.blue.withOpacity(0.2), Color(0XFF01579B)),
+                        buildActivityButton(
+                            Icons.transfer_within_a_station,
+                            " transfer",
+                            Colors.cyanAccent.withOpacity(0.2),
+                            Color(0XFF01579B)),
+                        buildActivityButton(Icons.pie_chart, "Movimentos",
+                            Color(0XFFD7CCC8).withOpacity(0.2), Color(0XFF949987)),
+                      ],
+                    )
+                  ]),
+                ),
               )
             ],
           ),
@@ -315,6 +307,34 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ))
+        ],
+      ),
+    );
+  }
+
+  Container buildActivityButton(
+      IconData icon, String title, Color backgroundColor, Color iconColor) {
+    return Container(
+      margin: EdgeInsets.all(10),
+      height: 90,
+      width: 90,
+      decoration: BoxDecoration(
+          color: backgroundColor, borderRadius: BorderRadius.circular(10.0)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            color: iconColor,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            title,
+            style:
+                TextStyle(fontWeight: FontWeight.bold, color: Colors.black54),
+          )
         ],
       ),
     );
