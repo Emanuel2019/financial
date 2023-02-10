@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'transfer.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: TransferPage(),
+     // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -30,17 +32,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+ int selectedIndex=0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Row(
+        children: [
+          buildNavBarItem(Icons.home,0),
+          buildNavBarItem(Icons.card_giftcard,1),
+          buildNavBarItem(Icons.camera,2),
+          buildNavBarItem(Icons.pie_chart,3),
+          buildNavBarItem(Icons.person,4),
+        ],
+      ),
       body: Stack(
         children: [
           Column(
@@ -149,11 +154,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   color: Colors.grey.shade100,
-                  child: ListView(children: [
+                  child: ListView(
+                    padding: EdgeInsets.only(top:75),
+                    children: [
                     Text(
                       "Actividades",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey),
                     ),
                     SizedBox(
                       height: 5,
@@ -168,10 +177,29 @@ class _MyHomePageState extends State<MyHomePage> {
                             " transfer",
                             Colors.cyanAccent.withOpacity(0.2),
                             Color(0XFF01579B)),
-                        buildActivityButton(Icons.pie_chart, "Movimentos",
-                            Color(0XFFD7CCC8).withOpacity(0.2), Color(0XFF949987)),
+                        buildActivityButton(
+                            Icons.pie_chart,
+                            "Movimentos",
+                            Color(0XFFD7CCC8).withOpacity(0.2),
+                            Color(0XFF949987)),
                       ],
-                    )
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      'Categoria',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    buildCategory(Icons.fastfood, "Comida", 120, 20, 85),
+                    buildCategory(Icons.flash_auto, "Energia", 130, 30, 90),
+                    buildCategory(Icons.school, "School", 140, 40, 100)
                   ]),
                 ),
               )
@@ -307,6 +335,111 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ))
+        ],
+      ),
+    );
+  }
+
+  GestureDetector buildNavBarItem(IconData icon,index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedIndex=index;
+        });
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width / 5,
+        height: 60,
+        decoration:index==selectedIndex? BoxDecoration(
+          border: Border(bottom: BorderSide(width: 4,color: Colors.green)),
+          gradient:LinearGradient(colors: [
+            Colors.green.withOpacity(0.3),
+            Colors.green.withOpacity(0.016),
+          ],
+          begin: Alignment.bottomCenter, end:Alignment.topCenter,
+          )
+          )
+        :BoxDecoration(
+          
+        ),
+        child: Icon(
+          icon,
+          color: index==selectedIndex? Color(0XFF00B868):Colors.grey,
+        ),
+      ),
+    );
+  }
+
+  Container buildCategory(IconData icon, String title, int amount,
+      int percentage, double quantity) {
+    return Container(
+      padding: EdgeInsets.all(15),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10), color: Colors.white),
+      height: quantity,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    icon,
+                    color: Color(0xFF00B686),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    title,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    '\$$amount',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "($percentage%)",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey),
+                  )
+                ],
+              )
+            ],
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Stack(
+            children: [
+              Container(
+                height: 5,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(2),
+                    color: Colors.grey.shade100),
+              ),
+              Container(
+                height: 5,
+                width: 80,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(2),
+                    color: Color(0XFF00B686)),
+              )
+            ],
+          )
         ],
       ),
     );
