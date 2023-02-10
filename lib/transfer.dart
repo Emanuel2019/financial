@@ -11,9 +11,19 @@ class TransferPage extends StatefulWidget {
 
 class _TransferPageState extends State<TransferPage> {
   @override
+   int selectedIndex=0;
   Widget build(BuildContext context) {
     return Scaffold(
       // o corpo da pagina mobile
+       bottomNavigationBar: Row(
+        children: [
+          buildNavBarItem(Icons.home,0),
+          buildNavBarItem(Icons.card_giftcard,1),
+          buildNavBarItem(Icons.camera,2),
+          buildNavBarItem(Icons.pie_chart,3),
+          buildNavBarItem(Icons.person,4),
+        ],
+      ),
       body: Stack(
         children: [
           Container(
@@ -69,7 +79,7 @@ class _TransferPageState extends State<TransferPage> {
           ),
           Positioned(
               top: 180,
-              height: MediaQuery.of(context).size.height -170,
+              height: MediaQuery.of(context).size.height - 170,
               child: Column(
                 children: [
                   Container(
@@ -98,15 +108,21 @@ class _TransferPageState extends State<TransferPage> {
                         Expanded(
                           child: ListView(
                             scrollDirection: Axis.horizontal,
-                            
                             children: [
-                              buildRecentContact('Neusa','assets/images/neusa.jpeg'),
-                              buildRecentContact('Emanuel','assets/images/emanuel1.jpeg'),
-                              buildRecentContact('Ngola','assets/images/emanuel2.jpeg'),
-                              buildRecentContact('Casal','assets/images/casal1.jpeg'),
-                              buildRecentContact('Escritorio','assets/images/2.jpg'),
-                              buildRecentContact('Patrão','assets/images/user_masculin.png'),
-                              buildRecentContact('Cliente','assets/images/female.webp'),
+                              buildRecentContact(
+                                  'Neusa', 'assets/images/neusa.jpeg'),
+                              buildRecentContact(
+                                  'Emanuel', 'assets/images/emanuel1.jpeg'),
+                              buildRecentContact(
+                                  'Ngola', 'assets/images/emanuel2.jpeg'),
+                              buildRecentContact(
+                                  'Casal', 'assets/images/casal1.jpeg'),
+                              buildRecentContact(
+                                  'Escritorio', 'assets/images/2.jpg'),
+                              buildRecentContact(
+                                  'Patrão', 'assets/images/user_masculin.png'),
+                              buildRecentContact(
+                                  'Cliente', 'assets/images/female.webp'),
                             ],
                           ),
                         )
@@ -117,87 +133,38 @@ class _TransferPageState extends State<TransferPage> {
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 30.0),
                       width: MediaQuery.of(context).size.width,
-                      decoration:  BoxDecoration(color: Colors.white),
+                      decoration: BoxDecoration(color: Colors.white),
                       child: ListView(
                         children: [
-                          Text('Contacto',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey
-                          ),
+                          Text(
+                            'Contacto',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey),
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(vertical: 0),
                             child: TextField(
                               decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.search,
-                                size:30,color: Colors.grey,)
-                              ),
+                                  prefixIcon: Icon(
+                                Icons.search,
+                                size: 30,
+                                color: Colors.grey,
+                              )),
                             ),
                           ),
-                          SizedBox(height:10),
-                          Container(
-                            child: Row(
-                              children: [
-                                Row(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundImage: AssetImage('assets/images/emanuel1.jpeg'),
-                                      radius: 30,
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Column(
-                                  children: [
-                                    Text('Manuel Marcos',
-                                    style: TextStyle(fontSize: 14,
-                                    fontWeight: FontWeight.bold
-                                    ),
-                                    ),
-                                    SizedBox(height: 5,),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.phone,
-                                        color: Colors.grey,
-                                        size: 16,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text('+244 923-435-741',
-                                        style: (TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.grey
-                                        )),
-                                        
-                                        ),
-                                         Container(
-                                      height: 45,
-                                      width: 45,
-                                      decoration: BoxDecoration(
-                                        color: Colors.greenAccent.withOpacity(0.2),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 20,
-                                        color: Colors.green,
-                                      ),
-                                    )
-                                      ],
-                                    ),
-                                   
-                                  ],
-                                )
-                              ],
-                            ),
-                            
-                            
-                          )
+                          SizedBox(height: 10),
+                          buildContactRow('Manuel Marco', '+244 923-435-741',
+                              'assets/images/emanuel1.jpeg'),
+                          buildContactRow(
+                              'Marcelino Marcos',
+                              '+244 923-435-741',
+                              'assets/images/emanuel2.jpeg'),
+                          buildContactRow('Leonardo de Sousa',
+                              '+244 923-435-741', 'assets/images/2.jpg'),
+                          buildContactRow('Manuel Marco', '+244 923-435-741',
+                              'assets/images/emanuel1.jpeg'),
                         ],
                       ),
                     ),
@@ -209,7 +176,83 @@ class _TransferPageState extends State<TransferPage> {
     );
   }
 
-  Container buildRecentContact( String name, String url) {
+  Container buildContactRow(String name, String phone, String url) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 15),
+      decoration: BoxDecoration(
+          border: Border(
+        bottom: BorderSide(width: 1, color: Colors.grey),
+      )),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundImage: AssetImage(url),
+                radius: 25,
+              ),
+            ],
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.phone,
+                        color: Colors.grey,
+                        size: 16,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        phone,
+                        style: (TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.grey)),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Container(
+                height: 45,
+                width: 45,
+                decoration: BoxDecoration(
+                  color: Colors.greenAccent.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  Icons.arrow_forward_ios,
+                  size: 20,
+                  color: Colors.green,
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Container buildRecentContact(String name, String url) {
     return Container(
       margin: EdgeInsets.only(right: 30),
       child: Column(
@@ -223,8 +266,7 @@ class _TransferPageState extends State<TransferPage> {
             ),
             child: Padding(
               padding: const EdgeInsets.all(3.0),
-              child: CircleAvatar(
-                  backgroundImage: AssetImage(url)),
+              child: CircleAvatar(backgroundImage: AssetImage(url)),
             ),
           ),
           SizedBox(
@@ -270,6 +312,35 @@ class _TransferPageState extends State<TransferPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+  GestureDetector buildNavBarItem(IconData icon,index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedIndex=index;
+        });
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width / 5,
+        height: 60,
+        decoration:index==selectedIndex? BoxDecoration(
+          border: Border(bottom: BorderSide(width: 4,color: Colors.green)),
+          gradient:LinearGradient(colors: [
+            Colors.green.withOpacity(0.3),
+            Colors.green.withOpacity(0.016),
+          ],
+          begin: Alignment.bottomCenter, end:Alignment.topCenter,
+          )
+          )
+        :BoxDecoration(
+          
+        ),
+        child: Icon(
+          icon,
+          color: index==selectedIndex? Color(0XFF00B868):Colors.grey,
+        ),
       ),
     );
   }
