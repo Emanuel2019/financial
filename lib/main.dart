@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'transfer.dart';
+import 'login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,8 +17,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: TransferPage(),
-     // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: LoginPage(),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -32,18 +33,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
- int selectedIndex=0;
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Row(
         children: [
-          buildNavBarItem(Icons.home,0),
-          buildNavBarItem(Icons.card_giftcard,1),
-          buildNavBarItem(Icons.camera,2),
-          buildNavBarItem(Icons.pie_chart,3),
-          buildNavBarItem(Icons.person,4),
+          buildNavBarItem(Icons.home, 0),
+          buildNavBarItem(Icons.card_giftcard, 1),
+          buildNavBarItem(Icons.camera, 2),
+          buildNavBarItem(Icons.pie_chart, 3),
+          buildNavBarItem(Icons.person, 4),
         ],
       ),
       body: Stack(
@@ -154,9 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   color: Colors.grey.shade100,
-                  child: ListView(
-                    padding: EdgeInsets.only(top:75),
-                    children: [
+                  child: ListView(padding: EdgeInsets.only(top: 75), children: [
                     Text(
                       "Actividades",
                       style: TextStyle(
@@ -340,31 +339,32 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  GestureDetector buildNavBarItem(IconData icon,index) {
+  GestureDetector buildNavBarItem(IconData icon, index) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          selectedIndex=index;
+          selectedIndex = index;
         });
       },
       child: Container(
         width: MediaQuery.of(context).size.width / 5,
         height: 60,
-        decoration:index==selectedIndex? BoxDecoration(
-          border: Border(bottom: BorderSide(width: 4,color: Colors.green)),
-          gradient:LinearGradient(colors: [
-            Colors.green.withOpacity(0.3),
-            Colors.green.withOpacity(0.016),
-          ],
-          begin: Alignment.bottomCenter, end:Alignment.topCenter,
-          )
-          )
-        :BoxDecoration(
-          
-        ),
+        decoration: index == selectedIndex
+            ? BoxDecoration(
+                border:
+                    Border(bottom: BorderSide(width: 4, color: Colors.green)),
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.green.withOpacity(0.3),
+                    Colors.green.withOpacity(0.016),
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                ))
+            : BoxDecoration(),
         child: Icon(
           icon,
-          color: index==selectedIndex? Color(0XFF00B868):Colors.grey,
+          color: index == selectedIndex ? Color(0XFF00B868) : Colors.grey,
         ),
       ),
     );
